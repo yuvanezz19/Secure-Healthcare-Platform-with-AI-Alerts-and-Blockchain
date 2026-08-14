@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VORTEXA-Sustain | Patient-Owned Green Healthcare Intelligence Network</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;0,800;0,900;1,400&family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            darkbg: '#0B0F17',
+            darkcard: '#121824',
+            gold: {
+              300: '#F5E08C',
+              400: '#E5C158',
+              500: '#D4AF37',
+              600: '#C5A028',
+              700: '#997A15',
+              900: '#4D3E0C',
+              950: '#261F06'
+            },
+            emerald: {
+              400: '#34D399',
+              500: '#10B981',
+              600: '#059669',
+              950: '#022C22'
+            }
+          },
+          fontFamily: {
+            serif: ['Playfair Display', 'Georgia', 'serif'],
+            sans: ['Inter', 'sans-serif'],
+            mono: ['Fira Code', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background: radial-gradient(circle at 50% 0%, #172033 0%, #0B0F17 60%, #07090E 100%);
+      color: #F8FAFC;
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+    }
+    
+    .glass-panel {
+      background: rgba(18, 24, 36, 0.75);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(212, 175, 55, 0.15);
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    }
+    
+    .glass-panel-gold {
+      background: linear-gradient(135deg, rgba(38, 31, 6, 0.45) 0%, rgba(18, 24, 36, 0.85) 100%);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(212, 175, 55, 0.35);
+      box-shadow: 0 10px 30px -10px rgba(212, 175, 55, 0.2);
+    }
+    
+    .glass-panel-emerald {
+      background: linear-gradient(135deg, rgba(2, 44, 34, 0.45) 0%, rgba(18, 24, 36, 0.85) 100%);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      box-shadow: 0 10px 30px -10px rgba(16, 185, 129, 0.15);
+    }
+    
+    .btn-gold {
+      background: linear-gradient(135deg, #D4AF37 0%, #F5E08C 50%, #C5A028 100%);
+      color: #0B0F17;
+      font-weight: 800;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .btn-gold:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px -5px rgba(212, 175, 55, 0.4);
+    }
+
+    .btn-outline-gold {
+      border: 1px solid rgba(212, 175, 55, 0.5);
+      color: #D4AF37;
+      background: transparent;
+      transition: all 0.3s ease;
+    }
+    .btn-outline-gold:hover {
+      background: rgba(212, 175, 55, 0.12);
+      border-color: #D4AF37;
+    }
+
+    .gradient-gold-text {
+      background: linear-gradient(135deg, #FFF 0%, #F5E08C 40%, #D4AF37 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .pulse-glow {
+      animation: pulseGlow 2.5s infinite alternate;
+    }
+    @keyframes pulseGlow {
+      0% { box-shadow: 0 0 10px rgba(212, 175, 55, 0.2); }
+      100% { box-shadow: 0 0 25px rgba(212, 175, 55, 0.6); }
+    }
+
+    /* Custom luxury scrollbars */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #0B0F17; }
+    ::-webkit-scrollbar-thumb { background: #261F06; border: 1px solid rgba(212, 175, 55, 0.3); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #4D3E0C; }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col antialiased selection:bg-[#D4AF37] selection:text-[#0B0F17]">
+
+  <!-- Header & Navigation -->
+  <header class="sticky top-0 z-50 bg-[#0B0F17]/90 backdrop-blur-md border-b border-[#D4AF37]/20 px-4 lg:px-8 py-3.5 flex flex-wrap items-center justify-between gap-4 shadow-2xl">
+    <!-- Brand Logo -->
+    <div class="flex items-center gap-3 cursor-pointer" onclick="setActiveTab('PATIENT')">
+      <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-[#D4AF37] via-[#F5E08C] to-[#997A15] flex items-center justify-center text-xl shadow-lg shadow-yellow-950/50">
+        🌿
+      </div>
+      <div>
+        <span class="font-serif font-extrabold text-xl tracking-tight text-white">VORTEXA<span class="text-[#D4AF37] font-light">-Sustain</span></span>
+        <span class="block text-[10px] text-[#D4AF37]/80 uppercase font-semibold tracking-wider -mt-0.5">Green Health Intelligence Network</span>
+      </div>
+    </div>
+
+    <!-- Center Module Navigation Tabs -->
+    <nav class="hidden lg:flex items-center bg-[#121824] p-1.5 rounded-2xl border border-[#D4AF37]/25 text-xs font-semibold">
+      <button onclick="setActiveTab('PATIENT')" id="tab-PATIENT" class="px-3.5 py-1.5 rounded-xl transition-all duration-200 bg-[#D4AF37] text-[#0B0F17] font-bold">👤 Patient Vault</button>
+      <button onclick="setActiveTab('DOCTOR')" id="tab-DOCTOR" class="px-3.5 py-1.5 rounded-xl transition-all duration-200 text-slate-300 hover:text-white hover:bg-white/5">🩺 Doctor Workspace</button>
+      <button onclick="setActiveTab('PHARMACY')" id="tab-PHARMACY" class="px-3.5 py-1.5 rounded-xl transition-all duration-200 text-slate-300 hover:text-white hover:bg-white/5">💊 Pharmacy Hub</button>
+      <button onclick="setActiveTab('ADMIN')" id="tab-ADMIN" class="px-3.5 py-1.5 rounded-xl transition-all duration-200 text-slate-300 hover:text-white hover:bg-white/5">🏥 Hospital Admin</button>
+      <button onclick="setActiveTab('DUP_TEST')" id="tab-DUP_TEST" class="px-3.5 py-1.5 rounded-xl transition-all duration-200 text-slate-300 hover:text-white hover:bg-white/5">🔬 Duplicate Test Inspector</button>
+      <button onclick="setActiveTab('ECO')" id="tab-ECO" class="px-3.5 py-1.5 rounded-xl transition-all duration-200 text-slate-300 hover:text-white hover:bg-white/5">🌱 Eco Analytics</button>
+      <button onclick="setActiveTab('LEDGER')" id="tab-LEDGER" class="px-3.5 py-1.5 rounded-xl transition-all duration-200 text-slate-300 hover:text-white hover:bg-white/5">🔗 Audit Ledger</button>
+    </nav>
+
+    <!-- Header Actions & Eco Badge -->
+    <div class="flex items-center gap-3">
+      <div class="flex items-center gap-2 bg-[#261F06]/80 border border-[#D4AF37]/40 px-3.5 py-1.5 rounded-xl text-xs font-bold text-[#D4AF37] pulse-glow">
+        <span>🌱 Eco Score: <strong class="text-white">88/100</strong></span>
+      </div>
+      <!-- Quick Demo Role Selector -->
+      <div class="flex items-center bg-[#121824] p-1 rounded-xl border border-[#D4AF37]/30 text-[11px] font-bold">
+        <span class="text-[9px] text-[#D4AF37] px-2 uppercase font-extrabold">Demo Role:</span>
+        <select id="role-select" onchange="handleRoleSelect(this.value)" class="bg-transparent text-white px-2 py-0.5 outline-none cursor-pointer">
+          <option value="PATIENT" class="bg-[#121824] text-white">Patient (Alex Mercer)</option>
+          <option value="DOCTOR" class="bg-[#121824] text-white">Doctor (Dr. Sarah Jenkins)</option>
+          <option value="PHARMACY" class="bg-[#121824] text-white">Pharmacy (Metro Pharmacy)</option>
+          <option value="ADMIN" class="bg-[#121824] text-white">Hospital Admin</option>
+        </select>
+      </div>
+    </div>
+  </header>
+
+  <!-- AI Safety Advisory Banner -->
+  <div class="max-w-7xl mx-auto px-4 lg:px-8 pt-5 w-full">
+    <div class="p-3.5 rounded-2xl bg-gradient-to-r from-[#261F06]/90 via-[#121824]/90 to-[#261F06]/90 border border-[#D4AF37]/40 text-slate-200 flex flex-wrap items-center justify-between gap-3 text-xs shadow-xl">
+      <div class="flex items-center gap-2.5">
+        <span class="text-[#D4AF37] text-base animate-pulse">🛡️</span>
+        <span class="font-medium">All AI recommendations provide transparent decision support. Final prescription & dispense actions require doctor/pharmacist verification.</span>
+      </div>
+      <div class="bg-[#0B0F17] text-[#D4AF37] px-3 py-1 rounded-lg border border-[#D4AF37]/50 text-[10px] font-extrabold uppercase tracking-wider">
+        AI Decision Support — Human Verification Required
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Tab Menu (Shown on smaller screens) -->
+  <div class="lg:hidden max-w-7xl mx-auto px-4 pt-3 w-full">
+    <div class="flex overflow-x-auto gap-2 p-2 bg-[#121824] rounded-xl border border-[#D4AF37]/20 text-xs font-semibold">
+      <button onclick="setActiveTab('PATIENT')" class="px-3 py-1.5 rounded-lg whitespace-nowrap bg-[#D4AF37] text-[#0B0F17] font-bold">Patient Vault</button>
+      <button onclick="setActiveTab('DOCTOR')" class="px-3 py-1.5 rounded-lg whitespace-nowrap text-slate-300">Doctor Workspace</button>
+      <button onclick="setActiveTab('PHARMACY')" class="px-3 py-1.5 rounded-lg whitespace-nowrap text-slate-300">Pharmacy Hub</button>
+      <button onclick="setActiveTab('ADMIN')" class="px-3 py-1.5 rounded-lg whitespace-nowrap text-slate-300">Admin</button>
+      <button onclick="setActiveTab('DUP_TEST')" class="px-3 py-1.5 rounded-lg whitespace-nowrap text-slate-300">Duplicate Inspector</button>
+      <button onclick="setActiveTab('ECO')" class="px-3 py-1.5 rounded-lg whitespace-nowrap text-slate-300">Eco Analytics</button>
+      <button onclick="setActiveTab('LEDGER')" class="px-3 py-1.5 rounded-lg whitespace-nowrap text-slate-300">Audit Ledger</button>
+    </div>
+  </div>
+
+  <!-- Main View Container -->
+  <main id="app-view" class="max-w-7xl mx-auto px-4 lg:px-8 py-8 flex-1 w-full space-y-8">
+    <!-- Dynamic View Injected via JavaScript -->
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-[#D4AF37]/20 py-8 mt-12 bg-[#0B0F17]/80 text-center text-xs text-slate-400">
+    <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2">
+        <span class="text-[#D4AF37] font-serif font-bold">VORTEXA-Sustain</span>
+        <span>— Patient-Owned Green Healthcare Intelligence</span>
+      </div>
+      <div class="flex items-center gap-4 text-[#D4AF37]">
+        <a href="/api/docs" target="_blank" class="hover:underline font-bold">⚡ FastAPI Swagger Docs</a>
+        <span>•</span>
+        <a href="/api/health" target="_blank" class="hover:underline font-bold">💚 API Health</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    let activeTab = 'PATIENT';
+    const API_BASE = '/api/v1';
+
+    function handleRoleSelect(role) {
+      if (role === 'PATIENT') setActiveTab('PATIENT');
+      if (role === 'DOCTOR') setActiveTab('DOCTOR');
+      if (role === 'PHARMACY') setActiveTab('PHARMACY');
+      if (role === 'ADMIN') setActiveTab('ADMIN');
+    }
+
+    function setActiveTab(tab) {
+      activeTab = tab;
+      const tabs = ['PATIENT', 'DOCTOR', 'PHARMACY', 'ADMIN', 'DUP_TEST', 'ECO', 'LEDGER'];
+      
+      tabs.forEach(t => {
+        const btn = document.getElementById(`tab-${t}`);
+        if (btn) {
+          if (t === tab) {
+            btn.className = "px-3.5 py-1.5 rounded-xl transition-all duration-200 bg-[#D4AF37] text-[#0B0F17] font-bold shadow-md";
+          } else {
+            btn.className = "px-3.5 py-1.5 rounded-xl transition-all duration-200 text-slate-300 hover:text-white hover:bg-white/5";
+          }
+        }
+      });
+
+      renderView();
+    }
+
+    async function renderView() {
+      const viewContainer = document.getElementById('app-view');
+      viewContainer.innerHTML = '<div class="text-center py-12 text-slate-400 text-sm animate-pulse">Loading intelligence network data...</div>';
+
+      try {
+        if (activeTab === 'PATIENT') {
+          await renderPatientView(viewContainer);
+        } else if (activeTab === 'DOCTOR') {
+          await renderDoctorView(viewContainer);
+        } else if (activeTab === 'PHARMACY') {
+          await renderPharmacyView(viewContainer);
+        } else if (activeTab === 'ADMIN') {
+          await renderAdminView(viewContainer);
+        } else if (activeTab === 'DUP_TEST') {
+          await renderDuplicateInspectorView(viewContainer);
+        } else if (activeTab === 'ECO') {
+          await renderEcoView(viewContainer);
+        } else if (activeTab === 'LEDGER') {
+          await renderLedgerView(viewContainer);
+        }
+      } catch (err) {
+        console.error(err);
+        viewContainer.innerHTML = `
+          <div class="glass-panel p-6 rounded-3xl border-rose-900/50 text-center space-y-3">
+            <p class="text-rose-400 font-bold">⚠️ Connection Warning</p>
+            <p class="text-xs text-slate-300">FastAPI backend at ${API_BASE} is initializing or standard fallback active.</p>
+            <button onclick="renderView()" class="btn-gold px-4 py-2 rounded-xl text-xs">Retry Loading</button>
+          </div>
+        `;
+      }
+    }
+
+    // 1. PATIENT PORTAL
+    async function renderPatientView(container) {
+      let patient = { full_name: "Alex Mercer", eco_score: 88, blood_group: "O+", encrypted_vault_id: "VAULT_DEMO_101" };
+      let consents = [];
+      let prescriptions = [];
+      let labs = [];
+
+      try {
+        const pRes = await fetch(`${API_BASE}/patients/profile?patient_id=DEMO-PAT-101`);
+        if (pRes.ok) patient = await pRes.ok ? await pRes.json() : patient;
+
+        const cRes = await fetch(`${API_BASE}/consents?patient_id=DEMO-PAT-101`);
+        if (cRes.ok) consents = await cRes.json();
+
+        const rxRes = await fetch(`${API_BASE}/prescriptions?patient_id=DEMO-PAT-101`);
+        if (rxRes.ok) prescriptions = await rxRes.json();
+
+        const lRes = await fetch(`${API_BASE}/labs?patient_id=DEMO-PAT-101`);
+        if (lRes.ok) labs = await lRes.json();
+      } catch (e) {
+        console.log("Using cached demo patient data");
+      }
+
+      container.innerHTML = `
+        <!-- Patient Banner -->
+        <div class="glass-panel-gold p-6 lg:p-8 rounded-3xl space-y-4">
+          <div class="flex flex-wrap items-center justify-between gap-4">
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="bg-[#261F06] text-[#D4AF37] text-[10px] font-extrabold px-3 py-1 rounded-full border border-[#D4AF37]/40 uppercase tracking-widest">PATIENT DATA SOVEREIGNTY VAULT</span>
+                <span class="text-xs text-emerald-400 font-bold flex items-center gap-1">🔒 AES-256 Encrypted</span>
+              </div>
+              <h1 class="font-serif text-3xl lg:text-4xl font-extrabold text-white mt-2">${patient.full_name || 'Alex Mercer'}</h1>
+              <p class="text-xs text-slate-300 mt-1">
+                Vault ID: <span class="font-mono text-[#D4AF37]">${patient.encrypted_vault_id || 'VAULT_0x98A1'}</span> • Blood Group: <strong class="text-rose-400">O+</strong> • Zero-Trust Consent Active
+              </p>
+            </div>
+
+            <div class="flex items-center gap-6 bg-[#0B0F17]/70 p-4 rounded-2xl border border-[#D4AF37]/30">
+              <div class="text-center">
+                <span class="text-[10px] text-slate-400 uppercase font-bold block">Patient Eco Score</span>
+                <span class="text-3xl font-serif font-extrabold text-[#D4AF37]">88<span class="text-xs text-slate-400 font-normal">/100</span></span>
+              </div>
+              <div class="h-8 w-px bg-white/10"></div>
+              <div class="text-center">
+                <span class="text-[10px] text-slate-400 uppercase font-bold block">Tests Saved</span>
+                <span class="text-3xl font-serif font-extrabold text-emerald-400">3</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Cards Layout -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <!-- Active Prescriptions -->
+          <div class="lg:col-span-2 glass-panel p-6 rounded-3xl space-y-4">
+            <div class="flex justify-between items-center border-b border-white/10 pb-3">
+              <h3 class="font-serif text-xl font-bold text-white flex items-center gap-2">💊 Active Prescriptions & Clinical Records</h3>
+              <span class="text-xs text-[#D4AF37] font-semibold">${prescriptions.length || 2} Records Vaulted</span>
+            </div>
+
+            <div class="space-y-4">
+              <div class="bg-[#0B0F17] p-5 rounded-2xl border border-[#D4AF37]/30 space-y-3">
+                <div class="flex justify-between items-start">
+                  <div>
+                    <h4 class="font-semibold text-white text-sm">Doctor Verification: Dr. Sarah Jenkins (Cardiology)</h4>
+                    <p class="text-xs text-slate-400">Issued: 2026-08-08 • Facility: Metro Heart Institute</p>
+                  </div>
+                  <span class="bg-emerald-950 text-emerald-400 border border-emerald-500/40 text-[10px] px-2.5 py-1 rounded-full font-bold uppercase">Human Verified</span>
+                </div>
+                <div class="bg-[#121824] p-3 rounded-xl border border-white/5 space-y-1 text-xs">
+                  <p class="text-[#D4AF37] font-semibold">1. Amoxicillin 500mg — Oral Capsule (TID x 7 Days)</p>
+                  <p class="text-slate-300">2. Paracetamol 650mg — Oral Tablet (PRN x 5 Days)</p>
+                </div>
+                <div class="flex justify-between items-center text-[11px] pt-1">
+                  <span class="font-mono text-[#D4AF37]">TX_0x8f7e6d5c4b3a2f1e</span>
+                  <span class="text-slate-400">SHA-256 Immutable Audit Hash</span>
+                </div>
+              </div>
+
+              <div class="bg-[#0B0F17] p-5 rounded-2xl border border-rose-500/30 space-y-3">
+                <div class="flex justify-between items-start">
+                  <div>
+                    <h4 class="font-semibold text-white text-sm">Penicillin Cross-Allergy Alert Detection</h4>
+                    <p class="text-xs text-slate-400">Detected by VORTEXA Clinical Rule Engine</p>
+                  </div>
+                  <span class="bg-amber-950 text-amber-300 border border-amber-500/40 text-[10px] px-2.5 py-1 rounded-full font-bold uppercase">AI Guardrail Alert</span>
+                </div>
+                <p class="text-xs text-amber-200">
+                  ⚠️ Patient record indicates documented allergy to Penicillin G. Amoxicillin prescribed requires doctor verification before dispensing.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Zero-Trust Consent Management -->
+          <div class="glass-panel p-6 rounded-3xl space-y-4">
+            <div class="border-b border-white/10 pb-3">
+              <h3 class="font-serif text-lg font-bold text-white flex items-center gap-2">🔐 Zero-Trust Consent Ledger</h3>
+              <p class="text-xs text-slate-400">Manage cryptographic access permissions</p>
+            </div>
+
+            <div class="space-y-3 text-xs">
+              <div class="p-3.5 bg-[#0B0F17] rounded-2xl border border-[#D4AF37]/20 flex items-center justify-between">
+                <div>
+                  <p class="font-bold text-white">Dr. Sarah Jenkins</p>
+                  <p class="text-[10px] text-slate-400">Read Access • Vault Records</p>
+                </div>
+                <button onclick="toggleConsent(this)" class="px-3 py-1 rounded-lg font-bold bg-emerald-950 text-emerald-400 border border-emerald-500/40">GRANTED</button>
+              </div>
+
+              <div class="p-3.5 bg-[#0B0F17] rounded-2xl border border-[#D4AF37]/20 flex items-center justify-between">
+                <div>
+                  <p class="font-bold text-white">Metro Central Pharmacy</p>
+                  <p class="text-[10px] text-slate-400">Dispense Verification</p>
+                </div>
+                <button onclick="toggleConsent(this)" class="px-3 py-1 rounded-lg font-bold bg-emerald-950 text-emerald-400 border border-emerald-500/40">GRANTED</button>
+              </div>
+
+              <div class="p-3.5 bg-[#0B0F17] rounded-2xl border border-white/10 flex items-center justify-between">
+                <div>
+                  <p class="font-bold text-white">Eco Clinical Research</p>
+                  <p class="text-[10px] text-slate-400">Anonymized Eco Analytics</p>
+                </div>
+                <button onclick="toggleConsent(this)" class="px-3 py-1 rounded-lg font-bold bg-rose-950 text-rose-400 border border-rose-500/40">REVOKED</button>
+              </div>
+            </div>
+
+            <div class="pt-2 text-center">
+              <span class="text-[10px] text-[#D4AF37] block font-mono">All consent mutations log to SHA-256 Blockchain</span>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // 2. DOCTOR WORKSPACE & OCR
+    async function renderDoctorView(container) {
+      container.innerHTML = `
+        <div class="glass-panel-gold p-6 lg:p-8 rounded-3xl space-y-4">
+          <div class="flex flex-wrap justify-between items-center gap-4">
+            <div>
+              <span class="text-xs text-[#D4AF37] font-bold uppercase tracking-wider">DOCTOR CLINICAL SAFETY WORKSPACE</span>
+              <h1 class="font-serif text-3xl font-extrabold text-white mt-1">Dr. Sarah Jenkins, MD</h1>
+              <p class="text-xs text-slate-300">Department of Internal Medicine • Verified License ID: #MD-88421-IN</p>
+            </div>
+            <button onclick="triggerSampleOCR('SAMPLE_A')" class="btn-gold px-6 py-3 rounded-2xl text-xs font-extrabold shadow-lg">
+              📄 Upload & Run OCR Prescription Pipeline →
+            </button>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <!-- OCR Upload & Interactive Form -->
+          <div class="glass-panel p-6 rounded-3xl space-y-4">
+            <h3 class="font-serif text-xl font-bold text-white border-b border-white/10 pb-3">Prescription OCR Capture & Human Verification</h3>
+            
+            <div class="space-y-3 text-xs">
+              <label class="block text-slate-300 font-semibold">Select Demo Prescription File:</label>
+              <div class="grid grid-cols-2 gap-3">
+                <button onclick="triggerSampleOCR('SAMPLE_A')" class="p-3 bg-[#0B0F17] rounded-xl border border-[#D4AF37]/30 hover:border-[#D4AF37] text-left">
+                  <p class="font-bold text-white">Sample A: General Medicine</p>
+                  <p class="text-[10px] text-slate-400">Amoxicillin + Paracetamol</p>
+                </button>
+                <button onclick="triggerSampleOCR('SAMPLE_B')" class="p-3 bg-[#0B0F17] rounded-xl border border-rose-500/30 hover:border-rose-500 text-left">
+                  <p class="font-bold text-rose-300">Sample B: Allergy Conflict Trigger</p>
+                  <p class="text-[10px] text-slate-400">Penicillin allergy cross-conflict</p>
+                </button>
+              </div>
+
+              <div id="ocr-output-box" class="pt-2">
+                <div class="p-5 bg-[#0B0F17] rounded-2xl border border-white/10 text-slate-400 text-center space-y-2">
+                  <p>Click a Sample Prescription above to run OCR Parsing pipeline.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Doctor Patient Search & History -->
+          <div class="glass-panel p-6 rounded-3xl space-y-4">
+            <h3 class="font-serif text-xl font-bold text-white border-b border-white/10 pb-3">Active Patient Vault Record</h3>
+            
+            <div class="bg-[#0B0F17] p-5 rounded-2xl border border-[#D4AF37]/30 space-y-3 text-xs">
+              <div class="flex justify-between items-center">
+                <span class="font-bold text-white text-sm">Alex Mercer (ID: DEMO-PAT-101)</span>
+                <span class="text-[#D4AF37] font-mono">Consent: GRANTED</span>
+              </div>
+              <div class="grid grid-cols-2 gap-2 text-slate-300">
+                <p>DOB: 1994-05-18</p>
+                <p>Blood Group: <strong class="text-rose-400">O+</strong></p>
+                <p class="col-span-2 text-amber-300">Allergies: <strong>Penicillin G, Sulfonamides</strong></p>
+              </div>
+              <div class="pt-2 border-t border-white/10">
+                <p class="font-semibold text-slate-200">Recent Diagnostic Lab Findings:</p>
+                <p class="text-slate-400 mt-1">Complete Blood Count (CBC) on 2026-07-28 — WBC: 6.8 K/uL, Hemoglobin: 14.2 g/dL. (Normal)</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // 3. PHARMACY HUB & INVENTORY FORECAST
+    async function renderPharmacyView(container) {
+      let items = [];
+      try {
+        const res = await fetch(`${API_BASE}/inventory`);
+        if (res.ok) items = await res.json();
+      } catch (e) { console.log(e); }
+
+      container.innerHTML = `
+        <div class="glass-panel-gold p-6 lg:p-8 rounded-3xl space-y-4">
+          <div class="flex flex-wrap justify-between items-center gap-4">
+            <div>
+              <span class="text-xs text-[#D4AF37] font-bold uppercase tracking-wider">PHARMACY INVENTORY INTELLIGENCE</span>
+              <h1 class="font-serif text-3xl font-extrabold text-white mt-1">Metro Central Pharmacy</h1>
+              <p class="text-xs text-slate-300">Stock Expiry Prevention & 30-Day Moving Average Demand Forecasting</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Inventory Stats -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="glass-panel p-5 rounded-2xl border border-rose-500/40 space-y-2">
+            <span class="text-xs text-rose-400 font-bold uppercase tracking-wider">Critical Expiry (0-30 Days)</span>
+            <p class="text-3xl font-serif font-extrabold text-rose-400">1 SKU Alert</p>
+            <p class="text-xs text-slate-300">Batch BAT-2026-091 • Amoxicillin 500mg</p>
+          </div>
+          <div class="glass-panel p-5 rounded-2xl border border-amber-500/40 space-y-2">
+            <span class="text-xs text-amber-400 font-bold uppercase tracking-wider">Near Expiry (31-90 Days)</span>
+            <p class="text-3xl font-serif font-extrabold text-amber-400">1 SKU Alert</p>
+            <p class="text-xs text-slate-300">Batch BAT-2026-114 • Paracetamol 650mg</p>
+          </div>
+          <div class="glass-panel p-5 rounded-2xl border border-[#D4AF37]/40 space-y-2">
+            <span class="text-xs text-[#D4AF37] font-bold uppercase tracking-wider">Predicted 30-Day Demand</span>
+            <p class="text-3xl font-serif font-extrabold text-[#D4AF37]">320 Units</p>
+            <p class="text-xs text-slate-300">Confidence Interval: 92.5%</p>
+          </div>
+        </div>
+
+        <!-- Live Inventory Table -->
+        <div class="glass-panel p-6 rounded-3xl space-y-4">
+          <h3 class="font-serif text-xl font-bold text-white border-b border-white/10 pb-3">Medicine Inventory & Demand Forecast</h3>
+          
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs">
+              <thead class="bg-[#0B0F17] text-[#D4AF37] uppercase font-bold tracking-wider">
+                <tr>
+                  <th class="p-3.5 rounded-l-xl">Medicine Name</th>
+                  <th class="p-3.5">Batch</th>
+                  <th class="p-3.5">Stock</th>
+                  <th class="p-3.5">Expiry Date</th>
+                  <th class="p-3.5">Status Badge</th>
+                  <th class="p-3.5 rounded-r-xl">Action</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-white/5 text-slate-200">
+                <tr>
+                  <td class="p-3.5 font-bold text-white">Amoxicillin 500mg <span class="block text-[10px] text-slate-400">Generic: Amoxicillin Trihydrate</span></td>
+                  <td class="p-3.5 font-mono text-[#D4AF37]">BAT-2026-091</td>
+                  <td class="p-3.5 font-bold">140 Units</td>
+                  <td class="p-3.5">2026-08-25</td>
+                  <td class="p-3.5"><span class="bg-rose-950 text-rose-400 border border-rose-500/40 px-2.5 py-1 rounded-full font-bold uppercase text-[10px]">CRITICAL (16 Days)</span></td>
+                  <td class="p-3.5"><button class="btn-outline-gold px-3 py-1 rounded-lg text-[10px]">Prioritize Dispense</button></td>
+                </tr>
+                <tr>
+                  <td class="p-3.5 font-bold text-white">Paracetamol 650mg <span class="block text-[10px] text-slate-400">Generic: Acetaminophen</span></td>
+                  <td class="p-3.5 font-mono text-[#D4AF37]">BAT-2026-114</td>
+                  <td class="p-3.5 font-bold">450 Units</td>
+                  <td class="p-3.5">2026-10-15</td>
+                  <td class="p-3.5"><span class="bg-amber-950 text-amber-300 border border-amber-500/40 px-2.5 py-1 rounded-full font-bold uppercase text-[10px]">NEAR EXPIRY (67 Days)</span></td>
+                  <td class="p-3.5"><button class="btn-outline-gold px-3 py-1 rounded-lg text-[10px]">Monitor</button></td>
+                </tr>
+                <tr>
+                  <td class="p-3.5 font-bold text-white">Pantoprazole 40mg <span class="block text-[10px] text-slate-400">Generic: Pantoprazole Sodium</span></td>
+                  <td class="p-3.5 font-mono text-[#D4AF37]">BAT-2027-005</td>
+                  <td class="p-3.5 font-bold">600 Units</td>
+                  <td class="p-3.5">2027-05-30</td>
+                  <td class="p-3.5"><span class="bg-emerald-950 text-emerald-400 border border-emerald-500/40 px-2.5 py-1 rounded-full font-bold uppercase text-[10px]">HEALTHY (294 Days)</span></td>
+                  <td class="p-3.5"><button class="btn-outline-gold px-3 py-1 rounded-lg text-[10px]">Stocked</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      `;
+    }
+
+    // 4. HOSPITAL ADMIN DASHBOARD
+    async function renderAdminView(container) {
+      container.innerHTML = `
+        <div class="glass-panel-gold p-6 lg:p-8 rounded-3xl space-y-4">
+          <span class="text-xs text-[#D4AF37] font-bold uppercase tracking-wider">HOSPITAL SYSTEM & AUDIT INTELLIGENCE</span>
+          <h1 class="font-serif text-3xl font-extrabold text-white">Master Hospital System Dashboard</h1>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div class="glass-panel p-5 rounded-2xl space-y-1">
+            <span class="text-xs text-slate-400 font-bold uppercase">Bed Utilization</span>
+            <p class="text-3xl font-serif font-bold text-white">74.2%</p>
+            <span class="text-[10px] text-emerald-400 font-semibold">186 / 250 Beds Occupied</span>
+          </div>
+          <div class="glass-panel p-5 rounded-2xl space-y-1">
+            <span class="text-xs text-slate-400 font-bold uppercase">Network Eco Score</span>
+            <p class="text-3xl font-serif font-bold text-[#D4AF37]">88/100</p>
+            <span class="text-[10px] text-[#D4AF37] font-semibold">Rank: Gold Sustainable</span>
+          </div>
+          <div class="glass-panel p-5 rounded-2xl space-y-1">
+            <span class="text-xs text-slate-400 font-bold uppercase">Financial Waste Saved</span>
+            <p class="text-3xl font-serif font-bold text-emerald-400">₹18,400</p>
+            <span class="text-[10px] text-slate-300">Prevented duplicate tests</span>
+          </div>
+          <div class="glass-panel p-5 rounded-2xl space-y-1">
+            <span class="text-xs text-slate-400 font-bold uppercase">CO₂ Emissions Saved</span>
+            <p class="text-3xl font-serif font-bold text-[#D4AF37]">42.8 kg</p>
+            <span class="text-[10px] text-slate-300">Green healthcare footprint</span>
+          </div>
+        </div>
+      `;
+    }
+
+    // 5. DUPLICATE TEST INSPECTOR
+    async function renderDuplicateInspectorView(container) {
+      container.innerHTML = `
+        <div class="glass-panel-gold p-6 lg:p-8 rounded-3xl space-y-4">
+          <span class="text-xs text-[#D4AF37] font-bold uppercase tracking-wider">DUPLICATE DIAGNOSTIC TEST PREVENTION ENGINE</span>
+          <h1 class="font-serif text-3xl font-extrabold text-white">Pre-Order Lab Test Inspector</h1>
+          <p class="text-xs text-slate-300">Evaluates 30-day lab repeat validity windows to prevent unnecessary blood draws, financial waste, and laboratory bio-waste.</p>
+        </div>
+
+        <div class="glass-panel p-6 lg:p-8 rounded-3xl space-y-6 max-w-3xl mx-auto">
+          <div class="space-y-3">
+            <label class="block text-xs font-bold text-white uppercase tracking-wider">Select or Type Diagnostic Test Name:</label>
+            <div class="flex gap-3">
+              <input id="dup-test-input" type="text" value="Complete Blood Count (CBC)" class="bg-[#0B0F17] border border-[#D4AF37]/30 rounded-xl px-4 py-3 text-xs text-white w-full outline-none focus:border-[#D4AF37]" placeholder="e.g. Complete Blood Count (CBC), Lipid Profile, HbA1c" />
+              <button onclick="executeDuplicateCheck()" class="btn-gold px-6 py-3 rounded-xl text-xs font-bold shrink-0">
+                Evaluate Risk →
+              </button>
+            </div>
+            <div class="flex items-center gap-3 text-[11px] text-slate-400 pt-1">
+              <span>Quick Select:</span>
+              <button onclick="setTestName('Complete Blood Count (CBC)')" class="text-[#D4AF37] hover:underline font-semibold">Complete Blood Count (CBC)</button>
+              <span>•</span>
+              <button onclick="setTestName('Lipid Profile')" class="text-[#D4AF37] hover:underline font-semibold">Lipid Profile</button>
+              <span>•</span>
+              <button onclick="setTestName('HbA1c Glycated Hemoglobin')" class="text-[#D4AF37] hover:underline font-semibold">HbA1c</button>
+            </div>
+          </div>
+
+          <div id="dup-result-container">
+            <div class="p-4 bg-[#0B0F17] border border-white/10 rounded-2xl text-xs text-slate-400 text-center">
+              Click "Evaluate Risk" to query repeat validity window engine.
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // 6. ECO ANALYTICS VIEW
+    async function renderEcoView(container) {
+      container.innerHTML = `
+        <div class="glass-panel-emerald p-6 lg:p-8 rounded-3xl space-y-4">
+          <span class="text-xs text-emerald-400 font-bold uppercase tracking-wider">SUSTAINABILITY & ECO-IMPACT ENGINE</span>
+          <h1 class="font-serif text-3xl font-extrabold text-white">Network Sustainability Dashboard</h1>
+          <p class="text-xs text-slate-300">Quantifying carbon offset, travel saved, and healthcare material zero-waste performance.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="glass-panel p-6 rounded-3xl space-y-2 border border-emerald-500/30">
+            <span class="text-xs text-emerald-400 font-bold uppercase">Estimated CO₂ Saved</span>
+            <p class="text-4xl font-serif font-extrabold text-emerald-400">42.8 kg</p>
+            <p class="text-xs text-slate-300">Equivalent to planting 2 mature trees</p>
+          </div>
+          <div class="glass-panel p-6 rounded-3xl space-y-2 border border-[#D4AF37]/30">
+            <span class="text-xs text-[#D4AF37] font-bold uppercase">Financial Waste Prevented</span>
+            <p class="text-4xl font-serif font-extrabold text-[#D4AF37]">₹18,400</p>
+            <p class="text-xs text-slate-300">Zero unnecessary re-testing</p>
+          </div>
+          <div class="glass-panel p-6 rounded-3xl space-y-2 border border-white/20">
+            <span class="text-xs text-slate-400 font-bold uppercase">Patient Travel Avoided</span>
+            <p class="text-4xl font-serif font-extrabold text-white">85 km</p>
+            <p class="text-xs text-slate-300">Tele-consultation & OCR verification</p>
+          </div>
+        </div>
+      `;
+    }
+
+    // 7. BLOCKCHAIN AUDIT LEDGER
+    async function renderLedgerView(container) {
+      let logs = [];
+      try {
+        const res = await fetch(`${API_BASE}/audit-logs`);
+        if (res.ok) logs = await res.json();
+      } catch (e) { console.log(e); }
+
+      container.innerHTML = `
+        <div class="glass-panel-gold p-6 lg:p-8 rounded-3xl space-y-4">
+          <span class="text-xs text-[#D4AF37] font-bold uppercase tracking-wider">CRYPTOGRAPHIC SHA-256 AUDIT LOG</span>
+          <h1 class="font-serif text-3xl font-extrabold text-white">Immutable Blockchain Consent Ledger</h1>
+          <p class="text-xs text-slate-300">Real-time tamper-evident transaction record stream.</p>
+        </div>
+
+        <div class="glass-panel p-6 rounded-3xl space-y-4">
+          <div class="flex justify-between items-center border-b border-white/10 pb-3">
+            <h3 class="font-serif text-xl font-bold text-white">Live Cryptographic Audit Trail</h3>
+            <span class="text-xs text-[#D4AF37] font-mono font-bold">Consensus: ACTIVE</span>
+          </div>
+
+          <div class="space-y-3 font-mono text-xs">
+            <div class="p-4 bg-[#0B0F17] rounded-2xl border border-[#D4AF37]/30 space-y-1">
+              <div class="flex justify-between text-[#D4AF37]">
+                <span class="font-bold">TX_0x9f8b7a6c5d4e3f2a</span>
+                <span>2026-08-09T17:30:12Z</span>
+              </div>
+              <p class="text-white">Actor: Dr. Sarah Jenkins (DOCTOR) • Action: VERIFY_PRESCRIPTION</p>
+              <p class="text-slate-400 text-[11px]">Details: Encrypted & saved Amoxicillin 500mg to Alex Mercer Vault</p>
+            </div>
+
+            <div class="p-4 bg-[#0B0F17] rounded-2xl border border-emerald-500/30 space-y-1">
+              <div class="flex justify-between text-emerald-400">
+                <span class="font-bold">TX_0x4e3d2c1b0a9f8e7d</span>
+                <span>2026-08-09T17:15:00Z</span>
+              </div>
+              <p class="text-white">Actor: Dr. Sarah Jenkins (DOCTOR) • Action: DUPLICATE_TEST_PREVENTED</p>
+              <p class="text-slate-400 text-[11px]">Details: Prevented duplicate CBC test order. Saved ₹450 & 0.45 kg CO₂</p>
+            </div>
+
+            <div class="p-4 bg-[#0B0F17] rounded-2xl border border-white/10 space-y-1">
+              <div class="flex justify-between text-slate-300">
+                <span class="font-bold">TX_0x1a2b3c4d5e6f7a8b</span>
+                <span>2026-08-09T16:45:22Z</span>
+              </div>
+              <p class="text-white">Actor: Alex Mercer (PATIENT) • Action: CONSENT_MUTATION</p>
+              <p class="text-slate-400 text-[11px]">Details: Granted Vault Read Consent to Metro Central Pharmacy</p>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // Helper functions
+    function setTestName(name) {
+      const input = document.getElementById('dup-test-input');
+      if (input) input.value = name;
+    }
+
+    async function executeDuplicateCheck() {
+      const input = document.getElementById('dup-test-input');
+      const resContainer = document.getElementById('dup-result-container');
+      if (!input || !resContainer) return;
+
+      const val = input.value;
+      resContainer.innerHTML = '<p class="text-xs text-slate-400 py-3 text-center animate-pulse">Evaluating lab repeat validity window...</p>';
+
+      try {
+        const res = await fetch(`${API_BASE}/labs/check-duplicate`, {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({ patient_id: 'DEMO-PAT-101', test_name: val })
+        });
+        const data = await res.json();
+
+        if (data.is_duplicate) {
+          resContainer.innerHTML = `
+            <div class="p-5 bg-[#261F06]/90 border border-[#D4AF37]/50 rounded-2xl text-xs space-y-3 shadow-xl">
+              <div class="flex items-center gap-2 text-[#D4AF37] font-bold text-sm">
+                <span>⚠️</span>
+                <span>${data.message || 'Duplicate Test Window Conflict Detected'}</span>
+              </div>
+              <div class="grid grid-cols-2 gap-3 text-slate-200 bg-[#0B0F17] p-3 rounded-xl">
+                <p>Financial Waste Saved: <strong class="text-emerald-400 font-bold">₹${data.waste_prevented_est_inr || 450}</strong></p>
+                <p>CO₂ Saved: <strong class="text-[#D4AF37] font-bold">${data.co2_saved_kg || 0.45} kg</strong></p>
+              </div>
+              <p class="text-[10px] text-[#D4AF37] font-bold uppercase tracking-wider">${data.disclaimer || 'AI Decision Support — Requires Human Verification'}</p>
+            </div>
+          `;
+        } else {
+          resContainer.innerHTML = `
+            <div class="p-5 bg-emerald-950/70 border border-emerald-500/40 rounded-2xl text-xs space-y-2">
+              <p class="font-bold text-emerald-400 text-sm">✓ Safe to Order — No Duplicate Test Issue</p>
+              <p class="text-slate-300">No test matching "${val}" was performed for Alex Mercer within the active 30-day validity window.</p>
+            </div>
+          `;
+        }
+      } catch (err) {
+        resContainer.innerHTML = `
+          <div class="p-4 bg-amber-950/70 border border-[#D4AF37]/50 rounded-2xl text-xs space-y-2">
+            <p class="font-bold text-[#D4AF37]">⚠️ Duplicate Test Risk Flagged (Offline Mode)</p>
+            <p class="text-slate-200">Patient Alex Mercer had Complete Blood Count (CBC) performed 12 days ago (within 30-day window).</p>
+            <p class="text-emerald-400 font-bold">Estimated Waste Prevented: ₹450 • CO₂ Saved: 0.45 kg</p>
+          </div>
+        `;
+      }
+    }
+
+    function triggerSampleOCR(sample) {
+      const box = document.getElementById('ocr-output-box');
+      if (!box) return;
+
+      if (sample === 'SAMPLE_A') {
+        box.innerHTML = `
+          <div class="p-5 bg-[#261F06]/90 border border-[#D4AF37]/50 rounded-2xl space-y-3 text-xs">
+            <span class="text-[#D4AF37] font-bold uppercase tracking-wider">OCR Pipeline Parsing Completed (Confidence: 97.4%)</span>
+            <div class="bg-[#0B0F17] p-3 rounded-xl font-mono text-[#D4AF37] space-y-1">
+              <p>+ Amoxicillin 500mg (TID x 7 Days)</p>
+              <p>+ Paracetamol 650mg (PRN x 5 Days)</p>
+            </div>
+            <div class="flex justify-between items-center pt-1">
+              <span class="text-emerald-400 font-bold">✓ Clinical Guardrail: No Allergy Conflict</span>
+              <button onclick="saveOCRToVault()" class="btn-gold px-4 py-2 rounded-xl text-xs font-bold">Verify & Save to Patient Vault →</button>
+            </div>
+          </div>
+        `;
+      } else {
+        box.innerHTML = `
+          <div class="p-5 bg-rose-950/80 border border-rose-500/50 rounded-2xl space-y-3 text-xs">
+            <span class="text-rose-300 font-bold uppercase tracking-wider">⚠️ AI Safety Guardrail Alert Triggered</span>
+            <p class="text-white font-medium">Potential Penicillin Cross-Allergy Conflict: Amoxicillin 500mg</p>
+            <div class="bg-[#0B0F17] p-3 rounded-xl text-rose-200 space-y-1">
+              <p>Patient Alex Mercer has documented allergy to <strong>Penicillin G</strong>.</p>
+              <p class="text-[10px] text-slate-400 mt-1">VORTEXA Rule Engine: Betalactam cross-reactivity threshold > 95%.</p>
+            </div>
+            <div class="p-2 bg-[#0B0F17] rounded-lg text-[10px] text-[#D4AF37] font-extrabold uppercase">
+              AI Decision Support — Doctor Override Required before Dispense
+            </div>
+          </div>
+        `;
+      }
+    }
+
+    function saveOCRToVault() {
+      alert("Prescription verified! Cryptographic hash TX_0x9f8b7a6c generated and saved to Alex Mercer's encrypted vault.");
+    }
+
+    function toggleConsent(btn) {
+      if (btn.innerText === 'GRANTED') {
+        btn.innerText = 'REVOKED';
+        btn.className = "px-3 py-1 rounded-lg font-bold bg-rose-950 text-rose-400 border border-rose-500/40";
+      } else {
+        btn.innerText = 'GRANTED';
+        btn.className = "px-3 py-1 rounded-lg font-bold bg-emerald-950 text-emerald-400 border border-emerald-500/40";
+      }
+    }
+
+    // Initial render call
+    renderView();
+  </script>
+</body>
+</html>
+

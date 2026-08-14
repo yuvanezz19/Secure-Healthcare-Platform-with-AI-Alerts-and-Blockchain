@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: vortexa_sustain_backend
+    ports:
+      - "8000:8000"
+    environment:
+      - PROJECT_NAME=VORTEXA-Sustain
+      - SECRET_KEY=vortexa-sustain-hackathon-super-secret-key-change-in-production-32bytes!
+      - DATABASE_URL=sqlite:///./vortexa_sustain.db
+    volumes:
+      - ./backend:/app
+    restart: always
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: vortexa_sustain_frontend
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+    restart: always

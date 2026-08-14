@@ -1,0 +1,104 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-[#FFFDF8] text-[#252525] font-sans antialiased selection:bg-sunset-100 selection:text-sunset-600;
+  }
+
+  h1, h2, h3, h4 {
+    @apply tracking-tight font-sans;
+  }
+}
+
+/* Ambient Sunset Light Field Background */
+.ambient-sunset-bg {
+  background-color: #FFFDF8;
+  background-image: 
+    radial-gradient(circle at 12% 18%, rgba(255, 228, 214, 0.6) 0%, transparent 35%),
+    radial-gradient(circle at 88% 70%, rgba(255, 194, 168, 0.4) 0%, transparent 40%),
+    radial-gradient(circle at 50% 30%, rgba(255, 245, 240, 0.8) 0%, transparent 60%);
+  background-attachment: fixed;
+}
+
+/* Realistic 2026 Frosted Glassmorphism Components */
+.glass-card {
+  background: rgba(255, 255, 255, 0.48);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  box-shadow: 0 20px 40px -15px rgba(255, 122, 69, 0.05), 0 0 1px 1px rgba(255, 255, 255, 0.8) inset;
+  border-radius: 1.25rem;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-card:hover {
+  background: rgba(255, 255, 255, 0.62);
+  border-color: rgba(255, 122, 69, 0.3);
+  box-shadow: 0 25px 50px -12px rgba(255, 122, 69, 0.1), 0 0 1px 1px rgba(255, 255, 255, 0.95) inset;
+  transform: translateY(-2px);
+}
+
+.glass-card-strong {
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 24px 48px -12px rgba(232, 93, 42, 0.08), 0 0 1px 1px rgba(255, 255, 255, 0.9) inset;
+  border-radius: 1.5rem;
+}
+
+.glass-pill {
+  background: rgba(255, 244, 238, 0.65);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 122, 69, 0.2);
+  box-shadow: 0 4px 12px rgba(255, 122, 69, 0.04);
+}
+
+.glass-nav {
+  background: rgba(255, 253, 248, 0.75);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-bottom: 1px solid rgba(255, 228, 214, 0.6);
+}
+
+/* Premium Sunset Buttons */
+.btn-sunset-primary {
+  @apply bg-gradient-to-r from-sunset-400 to-sunset-500 text-white font-semibold shadow-lg shadow-sunset-400/25 hover:shadow-sunset-400/40 transition-all duration-300 transform hover:-translate-y-0.5 active:translate-y-0 rounded-full px-6 py-2.5 flex items-center justify-center gap-2;
+}
+
+.btn-sunset-glass {
+  @apply bg-white/70 backdrop-blur-md border border-sunset-400/30 text-charcoal font-semibold hover:bg-white hover:border-sunset-400 transition-all duration-300 transform hover:-translate-y-0.5 active:translate-y-0 rounded-full px-6 py-2.5 flex items-center justify-center gap-2 shadow-sm;
+}
+
+.btn-sunset-outline {
+  @apply bg-transparent border border-sunset-400/40 text-sunset-500 hover:bg-sunset-100/50 hover:border-sunset-400 transition-all duration-300 font-semibold rounded-full px-5 py-2 flex items-center justify-center gap-2;
+}
+
+.gradient-text-sunset {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-charcoal via-sunset-500 to-sunset-400 font-bold;
+}
+
+/* Smooth Fade In Animation Utility */
+.animate-fade-in {
+  animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Custom Luxury Scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #FFFDF8;
+}
+::-webkit-scrollbar-thumb {
+  background: #FFE4D6;
+  border: 1px solid rgba(255, 122, 69, 0.2);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #FFC2A8;
+}

@@ -1,0 +1,42 @@
+# Node / Frontend
+frontend/node_modules
+frontend/dist
+frontend/.env.local
+frontend/.env.*.local
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
+
+# Python / Backend
+backend/__pycache__
+backend/*/__pycache__
+backend/*/*/__pycache__
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+backend/venv/
+backend/.env
+*.sqlite3
+*.db
+
+# Temporary tools & archives
+git_portable/
+git_bin/
+git_tools/
+*.zip
+push_to_github.py
+
+# IDE & OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+.agent/
+.agents/
+.pytest_cache/
+git_app/
+
