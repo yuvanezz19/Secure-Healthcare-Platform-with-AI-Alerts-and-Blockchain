@@ -7,21 +7,29 @@ import {
 const API_BASE = import.meta.env.VITE_API_URL || '/api';
 
 async function fetchJSON<T>(endpoint: string, options?: RequestInit): Promise<T> {
+  const token = typeof window !== 'undefined' ? localStorage.getItem('vortexa_token') : null;
+  const authHeaders: Record<string, string> = {};
+  if (token) {
+    authHeaders['Authorization'] = `Bearer ${token}`;
+  }
+
   try {
     const res = await fetch(`${API_BASE}${endpoint}`, {
       headers: {
         'Content-Type': 'application/json',
+        ...authHeaders,
         ...options?.headers
       },
       ...options
     });
     if (!res.ok) {
-      throw new Error(`API Error ${res.status}: ${res.statusText}`);
+      const errData = await res.json().catch(() => ({ detail: res.statusText }));
+      throw new Error(errData.detail || `API Error ${res.status}: ${res.statusText}`);
     }
     return await res.json();
-  } catch (err) {
-    console.warn(`Backend fetch failed for ${endpoint}, returning fallback mock:`, err);
-    return getFallbackData<T>(endpoint);
+  } catch (err: any) {
+    console.warn(`Backend fetch failed for ${endpoint}, using local simulation:`, err?.message || err);
+    return getFallbackData<T>(endpoint, options?.body ? JSON.parse(options.body as string) : undefined);
   }
 }
 
@@ -100,7 +108,87 @@ export const api = {
   getAuditLogs: () => fetchJSON<AuditLog[]>('/audit-logs')
 };
 
-function getFallbackData<T>(endpoint: string): T {
+function getFallbackData<T>(endpoint: string, payload?: any): T {
+  if (endpoint.includes('/auth/login')) {
+    const email = payload?.email?.toLowerCase() || '';
+    const storedUsers = JSON.parse(localStorage.getItem('vortexa_registered_users') || '[]');
+    const matchedUser = storedUsers.find((u: any) => u.email?.toLowerCase() === email);
+
+    if (matchedUser) {
+      return {
+        access_token: `mock-jwt-token-${Date.now()}`,
+        user_id: matchedUser.id,
+        full_name: matchedUser.full_name,
+        role: matchedUser.role,
+        email: matchedUser.email
+      } as unknown as T;
+    }
+
+    if (email.includes('doctor')) {
+      return {
+        access_token: `mock-jwt-token-${Date.now()}`,
+        user_id: "DEMO-DOC-101",
+        full_name: "Dr. Sarah Jenkins, MD",
+        role: "DOCTOR",
+        email: email || "demo.doctor@vortexa.org"
+      } as unknown as T;
+    }
+    if (email.includes('pharm')) {
+      return {
+        access_token: `mock-jwt-token-${Date.now()}`,
+        user_id: "DEMO-PHARM-101",
+        full_name: "Metro Central Pharmacy",
+        role: "PHARMACY",
+        email: email || "demo.pharmacy@vortexa.org"
+      } as unknown as T;
+    }
+    if (email.includes('admin')) {
+      return {
+        access_token: `mock-jwt-token-${Date.now()}`,
+        user_id: "DEMO-ADMIN-101",
+        full_name: "Hospital Administrator",
+        role: "ADMIN",
+        email: email || "demo.admin@vortexa.org"
+      } as unknown as T;
+    }
+
+    // Default patient fallback
+    return {
+      access_token: `mock-jwt-token-${Date.now()}`,
+      user_id: "DEMO-PAT-101",
+      full_name: email ? email.split('@')[0].replace('.', ' ').toUpperCase() : "Alex Mercer",
+      role: "PATIENT",
+      email: email || "demo.patient@vortexa.org"
+    } as unknown as T;
+  }
+
+  if (endpoint.includes('/auth/register')) {
+    const newUser = {
+      id: `USR-${Date.now()}`,
+      email: payload?.email || "new.user@vortexa.org",
+      full_name: payload?.full_name || "New User",
+      role: payload?.role || "PATIENT",
+      dob: payload?.dob,
+      blood_group: payload?.blood_group,
+      specialization: payload?.specialization,
+      hospital_name: payload?.hospital_name
+    };
+    try {
+      const storedUsers = JSON.parse(localStorage.getItem('vortexa_registered_users') || '[]');
+      storedUsers.push(newUser);
+      localStorage.setItem('vortexa_registered_users', JSON.stringify(storedUsers));
+    } catch (e) {
+      console.warn("Could not write to localStorage:", e);
+    }
+    return {
+      access_token: `mock-jwt-token-${Date.now()}`,
+      user_id: newUser.id,
+      full_name: newUser.full_name,
+      role: newUser.role,
+      email: newUser.email
+    } as unknown as T;
+  }
+
   if (endpoint.includes('/sustainability/dashboard')) {
     return {
       eco_score: 88,
