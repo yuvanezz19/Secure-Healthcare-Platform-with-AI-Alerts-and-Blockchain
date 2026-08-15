@@ -6,12 +6,23 @@ import { FileText, RefreshCw, AlertTriangle, CheckCircle2, Leaf, Search, ArrowRi
 
 export const LabReportsPage: React.FC = () => {
   const [labs, setLabs] = useState<LabReport[]>([]);
+  const [loading, setLoading] = useState(true);
   const [testInput, setTestInput] = useState('Complete Blood Count (CBC)');
   const [duplicateResult, setDuplicateResult] = useState<DuplicateTestResult | null>(null);
   const [checking, setChecking] = useState(false);
 
   useEffect(() => {
-    api.getLabReports("DEMO-PAT-101").then(setLabs);
+    setLoading(true);
+    api.getLabReports("DEMO-PAT-101")
+      .then((data) => {
+        setLabs(Array.isArray(data) ? data : []);
+      })
+      .catch((err) => {
+        console.warn("Could not fetch lab reports:", err);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   }, []);
 
   const handleCheckDuplicate = async () => {
@@ -105,37 +116,60 @@ export const LabReportsPage: React.FC = () => {
 
       {/* Lab History Table */}
       <div className="glass-card p-6 space-y-4 shadow-sm">
-        <h2 className="font-display text-lg font-bold text-charcoal">Patient Historical Lab Results</h2>
-        <div className="overflow-x-auto">
-          <table className="w-full text-left text-xs text-charcoal">
-            <thead className="bg-sunset-50 text-mutedgray uppercase font-semibold text-[10px] border-b border-sunset-100">
-              <tr>
-                <th className="p-3">Test Name</th>
-                <th className="p-3">Category</th>
-                <th className="p-3">Date</th>
-                <th className="p-3">Doctor</th>
-                <th className="p-3">Status</th>
-                <th className="p-3">Repeat Window</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-sunset-100">
-              {labs.map((lb) => (
-                <tr key={lb.id} className="hover:bg-sunset-50/50 transition-colors">
-                  <td className="p-3 font-bold text-charcoal">{lb.test_name}</td>
-                  <td className="p-3 text-mutedgray">{lb.category}</td>
-                  <td className="p-3 text-mutedgray">{lb.test_date}</td>
-                  <td className="p-3 text-sunset-600 font-medium">{lb.doctor_name}</td>
-                  <td className="p-3">
-                    <span className="bg-sunset-100 text-sunset-600 px-2.5 py-0.5 rounded-full text-[10px] font-bold">
-                      {lb.status}
-                    </span>
-                  </td>
-                  <td className="p-3 text-mutedgray">{lb.repeat_window_days} days</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+        <div className="flex items-center justify-between">
+          <h2 className="font-display text-lg font-bold text-charcoal">Patient Historical Lab Results ({labs.length})</h2>
+          <span className="text-[10px] text-mutedgray bg-sunset-50 border border-sunset-100 px-2.5 py-1 rounded-full font-bold">
+            Zero-Waste Verified Record
+          </span>
         </div>
+
+        {loading ? (
+          <div className="py-12 flex flex-col items-center justify-center space-y-3 text-mutedgray">
+            <div className="w-6 h-6 border-2 border-sunset-300 border-t-sunset-600 rounded-full animate-spin" />
+            <p className="text-xs font-medium">Fetching verified lab history from clinical vault...</p>
+          </div>
+        ) : labs.length === 0 ? (
+          <div className="py-10 text-center space-y-2">
+            <FileText className="w-8 h-8 text-sunset-300 mx-auto" />
+            <p className="text-xs text-mutedgray font-medium">No diagnostic history found for this patient record.</p>
+          </div>
+        ) : (
+          <div className="overflow-x-auto">
+            <table className="w-full text-left text-xs text-charcoal">
+              <thead className="bg-sunset-50 text-mutedgray uppercase font-semibold text-[10px] border-b border-sunset-100">
+                <tr>
+                  <th className="p-3">Test Name</th>
+                  <th className="p-3">Category</th>
+                  <th className="p-3">Date</th>
+                  <th className="p-3">Doctor</th>
+                  <th className="p-3">Status</th>
+                  <th className="p-3">Repeat Window</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-sunset-100">
+                {labs.map((lb) => (
+                  <tr key={lb.id} className="hover:bg-sunset-50/50 transition-colors">
+                    <td className="p-3 font-bold text-charcoal">
+                      <div>{lb.test_name}</div>
+                      {lb.result_summary && (
+                        <div className="text-[10px] text-mutedgray font-normal mt-0.5 max-w-md line-clamp-1">{lb.result_summary}</div>
+                      )}
+                    </td>
+                    <td className="p-3 text-mutedgray">{lb.category}</td>
+                    <td className="p-3 text-mutedgray">{lb.test_date}</td>
+                    <td className="p-3 text-sunset-600 font-medium">{lb.doctor_name}</td>
+                    <td className="p-3">
+                      <span className="bg-sunset-100 text-sunset-600 px-2.5 py-0.5 rounded-full text-[10px] font-bold">
+                        {lb.status}
+                      </span>
+                    </td>
+                    <td className="p-3 text-mutedgray">{lb.repeat_window_days || 30} days</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
       </div>
     </div>
   );

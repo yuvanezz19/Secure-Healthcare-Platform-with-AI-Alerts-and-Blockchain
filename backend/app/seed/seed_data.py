@@ -1,5 +1,6 @@
 from datetime import datetime, timedelta
 from sqlalchemy.orm import Session
+from sqlalchemy import text
 from app.core.db import engine, SessionLocal, Base
 from app.core.security import get_password_hash
 from app.models.models import (
@@ -11,10 +12,31 @@ from app.services.blockchain_service import BlockchainService
 
 def seed_database():
     Base.metadata.create_all(bind=engine)
+    
+    # Safe auto-migration for SQLite/PostgreSQL to add username column if not present
+    try:
+        with engine.begin() as conn:
+            conn.execute(text("ALTER TABLE users ADD COLUMN username VARCHAR;"))
+    except Exception:
+        pass # Column already exists
+
     db: Session = SessionLocal()
 
-    # Clear existing if any
-    if db.query(User).filter(User.email == "demo.patient@vortexa.org").first():
+    # Backfill username for existing seeded users if missing
+    p_user = db.query(User).filter(User.email == "demo.patient@vortexa.org").first()
+    if p_user:
+        if not p_user.username:
+            p_user.username = "alex_patient"
+        d_user = db.query(User).filter(User.email == "demo.doctor@vortexa.org").first()
+        if d_user and not d_user.username:
+            d_user.username = "dr_sarah"
+        ph_user = db.query(User).filter(User.email == "demo.pharmacy@vortexa.org").first()
+        if ph_user and not ph_user.username:
+            ph_user.username = "metro_pharma"
+        ad_user = db.query(User).filter(User.email == "demo.admin@vortexa.org").first()
+        if ad_user and not ad_user.username:
+            ad_user.username = "admin"
+        db.commit()
         db.close()
         return
 
@@ -22,24 +44,28 @@ def seed_database():
 
     # 1. Create Users
     patient_user = User(
+        username="alex_patient",
         email="demo.patient@vortexa.org",
         password_hash=get_password_hash("patient123"),
         full_name="Alex Mercer",
         role=UserRole.PATIENT.value
     )
     doctor_user = User(
+        username="dr_sarah",
         email="demo.doctor@vortexa.org",
         password_hash=get_password_hash("doctor123"),
         full_name="Dr. Sarah Jenkins",
         role=UserRole.DOCTOR.value
     )
     pharmacy_user = User(
+        username="metro_pharma",
         email="demo.pharmacy@vortexa.org",
         password_hash=get_password_hash("pharmacy123"),
         full_name="Metro Central Pharmacy",
         role=UserRole.PHARMACY.value
     )
     admin_user = User(
+        username="admin",
         email="demo.admin@vortexa.org",
         password_hash=get_password_hash("admin123"),
         full_name="Hospital Administrator",

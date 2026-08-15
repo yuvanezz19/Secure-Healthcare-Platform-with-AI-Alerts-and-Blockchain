@@ -18,7 +18,7 @@ def test_root_endpoint():
         assert data["name"] == "VORTEXA-Sustain"
         assert "Zero Waste" in data["tagline"]
 
-def test_login_demo_patient():
+def test_login_demo_patient_email():
     response = client.post("/api/auth/login", json={
         "email": "demo.patient@vortexa.org",
         "password": "patient123"
@@ -26,7 +26,54 @@ def test_login_demo_patient():
     assert response.status_code == 200
     data = response.json()
     assert data["role"] == "PATIENT"
+    assert data.get("username") == "alex_patient"
     assert "access_token" in data
+
+def test_login_demo_patient_username():
+    response = client.post("/api/auth/login", json={
+        "username": "alex_patient",
+        "password": "patient123"
+    })
+    assert response.status_code == 200
+    data = response.json()
+    assert data["role"] == "PATIENT"
+    assert data["email"] == "demo.patient@vortexa.org"
+    assert "access_token" in data
+
+def test_login_demo_doctor_username():
+    response = client.post("/api/auth/login", json={
+        "username": "dr_sarah",
+        "password": "doctor123"
+    })
+    assert response.status_code == 200
+    data = response.json()
+    assert data["role"] == "DOCTOR"
+    assert data["email"] == "demo.doctor@vortexa.org"
+    assert "access_token" in data
+
+def test_register_and_login_with_username():
+    import uuid
+    uid = str(uuid.uuid4())[:8]
+    reg_response = client.post("/api/auth/register", json={
+        "username": f"doc_{uid}",
+        "email": f"doc_{uid}@testclinic.org",
+        "password": "securePass123!",
+        "full_name": f"Dr. Tester {uid}",
+        "role": "DOCTOR",
+        "specialization": "Pediatrics"
+    })
+    assert reg_response.status_code == 200
+    reg_data = reg_response.json()
+    assert reg_data["username"] == f"doc_{uid}"
+
+    # Login with the new username
+    login_response = client.post("/api/auth/login", json={
+        "username": f"doc_{uid}",
+        "password": "securePass123!"
+    })
+    assert login_response.status_code == 200
+    login_data = login_response.json()
+    assert login_data["role"] == "DOCTOR"
 
 def test_get_sustainability_dashboard():
     response = client.get("/api/sustainability/dashboard")

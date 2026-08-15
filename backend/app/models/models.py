@@ -18,6 +18,7 @@ class User(Base):
     __tablename__ = "users"
 
     id = Column(String, primary_key=True, default=generate_uuid)
+    username = Column(String, unique=True, index=True, nullable=True)
     email = Column(String, unique=True, index=True, nullable=False)
     password_hash = Column(String, nullable=False)
     full_name = Column(String, nullable=False)

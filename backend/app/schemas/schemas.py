@@ -3,10 +3,12 @@ from typing import List, Optional
 from datetime import datetime
 
 class LoginRequest(BaseModel):
-    email: EmailStr
+    username: Optional[str] = None
+    email: Optional[str] = None
     password: str
 
 class RegisterRequest(BaseModel):
+    username: Optional[str] = None
     email: EmailStr
     password: str
     full_name: str
@@ -23,9 +25,11 @@ class TokenResponse(BaseModel):
     full_name: str
     role: str
     email: str
+    username: Optional[str] = None
 
 class UserOut(BaseModel):
     id: str
+    username: Optional[str] = None
     email: str
     full_name: str
     role: str

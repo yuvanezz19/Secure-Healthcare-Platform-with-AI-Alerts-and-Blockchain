@@ -13,10 +13,10 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 const DEMO_USERS: Record<Role, User> = {
-  PATIENT: { id: "DEMO-PAT-101", email: "demo.patient@vortexa.org", full_name: "Alex Mercer", role: "PATIENT" },
-  DOCTOR: { id: "DEMO-DOC-101", email: "demo.doctor@vortexa.org", full_name: "Dr. Sarah Jenkins", role: "DOCTOR" },
-  PHARMACY: { id: "DEMO-PHARM-101", email: "demo.pharmacy@vortexa.org", full_name: "Metro Central Pharmacy", role: "PHARMACY" },
-  ADMIN: { id: "DEMO-ADMIN-101", email: "demo.admin@vortexa.org", full_name: "Hospital Administrator", role: "ADMIN" }
+  PATIENT: { id: "DEMO-PAT-101", username: "alex_patient", email: "demo.patient@vortexa.org", full_name: "Alex Mercer", role: "PATIENT" },
+  DOCTOR: { id: "DEMO-DOC-101", username: "dr_sarah", email: "demo.doctor@vortexa.org", full_name: "Dr. Sarah Jenkins", role: "DOCTOR" },
+  PHARMACY: { id: "DEMO-PHARM-101", username: "metro_pharma", email: "demo.pharmacy@vortexa.org", full_name: "Metro Central Pharmacy", role: "PHARMACY" },
+  ADMIN: { id: "DEMO-ADMIN-101", username: "admin", email: "demo.admin@vortexa.org", full_name: "Hospital Administrator", role: "ADMIN" }
 };
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {

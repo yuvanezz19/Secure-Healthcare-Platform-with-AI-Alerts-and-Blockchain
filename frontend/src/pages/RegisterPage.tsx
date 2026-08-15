@@ -28,6 +28,7 @@ export const RegisterPage: React.FC = () => {
 
   // Common fields
   const [fullName, setFullName] = useState('');
+  const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -102,7 +103,8 @@ export const RegisterPage: React.FC = () => {
 
     try {
       const registrationPayload: any = {
-        email: email.trim(),
+        username: username.trim() || email.split('@')[0].toLowerCase(),
+        email: email.trim().toLowerCase(),
         password: password,
         full_name: fullName.trim(),
         role: selectedRole
@@ -125,6 +127,7 @@ export const RegisterPage: React.FC = () => {
 
       const createdUser: UserType = {
         id: res.user_id || `USR-${Date.now()}`,
+        username: res.username || registrationPayload.username,
         email: res.email || email,
         full_name: res.full_name || fullName,
         role: (res.role as Role) || selectedRole
@@ -144,68 +147,60 @@ export const RegisterPage: React.FC = () => {
   };
 
   return (
-    <div className="max-w-lg mx-auto py-10 px-4 space-y-6 animate-fade-in">
+    <div className="max-w-xl mx-auto py-10 px-4 space-y-6 animate-fade-in">
       {/* Header */}
       <div className="text-center space-y-2">
         <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-sunset-50 border border-sunset-200 text-sunset-600 shadow-sm mb-1">
           <ShieldCheck className="w-6 h-6" />
         </div>
         <h1 className="font-display text-3xl font-extrabold text-charcoal tracking-tight">
-          Create Encrypted Account
+          Create Secure Account
         </h1>
         <p className="text-mutedgray text-xs font-medium">
-          Join the Secure Healthcare Platform with AI Alerts & Blockchain Audit
+          Zero-Knowledge Encrypted Clinical & Health Vault Platform
         </p>
       </div>
 
       {/* Role Selection */}
-      <div className="space-y-1.5">
-        <label className="text-xs font-bold text-charcoal block text-center">
-          Select Your Healthcare Role
-        </label>
-        <div className="grid grid-cols-3 gap-2">
-          {/* Patient Option */}
-          <button
-            type="button"
-            onClick={() => setSelectedRole('PATIENT')}
-            className={`p-3 rounded-2xl border text-center transition-all flex flex-col items-center gap-1.5 shadow-xs ${
-              selectedRole === 'PATIENT'
-                ? 'bg-sunset-50/90 border-sunset-400 text-sunset-700 ring-2 ring-sunset-200/50'
-                : 'bg-white/80 border-sunset-100 text-mutedgray hover:text-charcoal hover:border-sunset-200'
-            }`}
-          >
-            <User className="w-5 h-5" />
-            <span className="text-xs font-bold">Patient</span>
-          </button>
+      <div className="grid grid-cols-3 gap-2 p-1.5 bg-white/70 rounded-2xl border border-sunset-100 shadow-xs">
+        <button
+          type="button"
+          onClick={() => setSelectedRole('PATIENT')}
+          className={`py-2.5 px-3 rounded-xl text-xs font-bold transition-all duration-200 flex flex-col items-center gap-1 cursor-pointer ${
+            selectedRole === 'PATIENT'
+              ? 'bg-sunset-600 text-white shadow-sm'
+              : 'text-mutedgray hover:text-charcoal hover:bg-sunset-50/50'
+          }`}
+        >
+          <User className="w-4 h-4" />
+          <span>Patient</span>
+        </button>
 
-          {/* Doctor Option */}
-          <button
-            type="button"
-            onClick={() => setSelectedRole('DOCTOR')}
-            className={`p-3 rounded-2xl border text-center transition-all flex flex-col items-center gap-1.5 shadow-xs ${
-              selectedRole === 'DOCTOR'
-                ? 'bg-sunset-50/90 border-sunset-400 text-sunset-700 ring-2 ring-sunset-200/50'
-                : 'bg-white/80 border-sunset-100 text-mutedgray hover:text-charcoal hover:border-sunset-200'
-            }`}
-          >
-            <Stethoscope className="w-5 h-5" />
-            <span className="text-xs font-bold">Doctor</span>
-          </button>
+        <button
+          type="button"
+          onClick={() => setSelectedRole('DOCTOR')}
+          className={`py-2.5 px-3 rounded-xl text-xs font-bold transition-all duration-200 flex flex-col items-center gap-1 cursor-pointer ${
+            selectedRole === 'DOCTOR'
+              ? 'bg-sunset-600 text-white shadow-sm'
+              : 'text-mutedgray hover:text-charcoal hover:bg-sunset-50/50'
+          }`}
+        >
+          <Stethoscope className="w-4 h-4" />
+          <span>Doctor</span>
+        </button>
 
-          {/* Pharmacy Option */}
-          <button
-            type="button"
-            onClick={() => setSelectedRole('PHARMACY')}
-            className={`p-3 rounded-2xl border text-center transition-all flex flex-col items-center gap-1.5 shadow-xs ${
-              selectedRole === 'PHARMACY'
-                ? 'bg-sunset-50/90 border-sunset-400 text-sunset-700 ring-2 ring-sunset-200/50'
-                : 'bg-white/80 border-sunset-100 text-mutedgray hover:text-charcoal hover:border-sunset-200'
-            }`}
-          >
-            <Store className="w-5 h-5" />
-            <span className="text-xs font-bold">Pharmacy</span>
-          </button>
-        </div>
+        <button
+          type="button"
+          onClick={() => setSelectedRole('PHARMACY')}
+          className={`py-2.5 px-3 rounded-xl text-xs font-bold transition-all duration-200 flex flex-col items-center gap-1 cursor-pointer ${
+            selectedRole === 'PHARMACY'
+              ? 'bg-sunset-600 text-white shadow-sm'
+              : 'text-mutedgray hover:text-charcoal hover:bg-sunset-50/50'
+          }`}
+        >
+          <Store className="w-4 h-4" />
+          <span>Pharmacy</span>
+        </button>
       </div>
 
       {/* Error Alert */}
@@ -213,7 +208,7 @@ export const RegisterPage: React.FC = () => {
         <div className="p-3.5 rounded-2xl bg-red-50/90 border border-red-200 text-red-700 text-xs flex items-start gap-2.5 shadow-xs animate-shake">
           <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
           <div className="flex-1">
-            <span className="font-semibold block">Registration Notice</span>
+            <span className="font-semibold block">Registration Error</span>
             <span>{error}</span>
           </div>
         </div>
@@ -237,6 +232,26 @@ export const RegisterPage: React.FC = () => {
               onChange={(e) => setFullName(e.target.value)}
               className="w-full bg-white/90 border border-sunset-100 rounded-2xl pl-10 pr-4 py-2.5 text-sm text-charcoal placeholder:text-mutedgray/60 focus:outline-none focus:border-sunset-500 focus:ring-2 focus:ring-sunset-200/50 shadow-xs"
               required
+            />
+          </div>
+        </div>
+
+        {/* Username */}
+        <div className="space-y-1">
+          <label className="text-xs font-bold text-charcoal flex items-center justify-between">
+            <span>Username</span>
+            <span className="text-[10px] text-mutedgray font-normal">e.g. dr_jordan or jordan_patient</span>
+          </label>
+          <div className="relative">
+            <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-mutedgray">
+              <User className="w-4 h-4" />
+            </div>
+            <input
+              type="text"
+              placeholder="Choose a username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              className="w-full bg-white/90 border border-sunset-100 rounded-2xl pl-10 pr-4 py-2.5 text-sm text-charcoal placeholder:text-mutedgray/60 focus:outline-none focus:border-sunset-500 focus:ring-2 focus:ring-sunset-200/50 shadow-xs"
             />
           </div>
         </div>
